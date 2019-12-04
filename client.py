@@ -5,7 +5,7 @@ import tweepy
 import urllib.request
 import tempfile as tmp
 import subprocess
-
+from dateutil import tz
 
 def authenticate():
     auth = tweepy.OAuthHandler(secrets.API_KEY, secrets.API_SECRET_KEY)
@@ -15,12 +15,11 @@ def authenticate():
 
 
 def get_imginfo(api, user):
-    # TODO: Time zone
     tweets = api.user_timeline(user_id=user)
     urls = []
     dates = []
     for status in tweets:
-        dates.append(status.created_at)
+        dates.append(status.created_at.replace(tzinfo=tz.gettz('UTC')).astimezone(tz.gettz('Europe/Berlin')))
         for photo in status.entities['media']:
             urls.append(photo['media_url_https'])
     return urls, dates
