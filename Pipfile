@@ -8,7 +8,6 @@ tweepy = "*"
 argparse = "*"
 Pillow = "*"
 flask = "*"
-dateutil = "*"
 gunicorn = "*"
 
 [dev-packages]
