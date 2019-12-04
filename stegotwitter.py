@@ -20,15 +20,6 @@ def tweet_image(img):
     status = api.update_status(media_ids=[response.media_id])
     return status
 
-
-def hide(img, text):
-    stego_img = Image.open(img)
-
-    # stego
-
-    return stego_img
-
-
 def destroy_tweets(api, tweets):
     if tweets:
         for t in tweets:
@@ -38,19 +29,32 @@ def destroy_tweets(api, tweets):
         return False
 
 
-def steghide_embed(infile_name, text, passwd):
+def steghide_embed(infile_name, text, passwd, outfile_name):
+
     with tmp.NamedTemporaryFile() as t:
         t.write(text.encode('utf-8'))
         t.seek(0)
-        with subprocess.Popen([
-            'steghide',
-            'embed',
-            '-cf', infile_name,
-            '-ef', t.name,
-            '-p', passwd,
-            '-f'
-        ], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
-            proc.wait()
+        if outfile_name:
+            with subprocess.Popen([
+                'steghide',
+                'embed',
+                '-cf', infile_name,
+                '-ef', t.name,
+                '-sf', outfile_name,
+                '-p', passwd,
+                '-f'
+            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+                proc.wait()
+        else:
+            with subprocess.Popen([
+                'steghide',
+                'embed',
+                '-cf', infile_name,
+                '-ef', t.name,
+                '-p', passwd,
+                '-f'
+            ], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+                proc.wait()
 
 
 if __name__ == '__main__':
@@ -66,14 +70,11 @@ if __name__ == '__main__':
 
     if args.img and args.output and args.text:
         # Crear stego image en local
-        # TODO
-        img = hide(args.img, args.text)
-        img.save(args.output)
-
+        steghide_embed(args.img, args.text, secrets.STEG_PASS,args.output)
     elif args.img:
         # Tweet
         api = authenticate()
-        steghide_embed(args.img, args.text, secrets.STEG_PASS)
+        steghide_embed(args.img, args.text, secrets.STEG_PASS,None)
         tweet_image(args.img)
 
     elif args.purge:
