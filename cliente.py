@@ -14,13 +14,15 @@ def authenticate():
     return api
 
 
-def get_imgurls(user):
+def get_imginfo(user):
     tweets = api.user_timeline(user_id=user)
     urls = []
+    dates = []
     for status in tweets:
+        dates.append(status.created_at)
         for photo in status.entities['media']:
             urls.append(photo['media_url_https'])
-    return urls
+    return urls,dates
 
 
 def steghide_extract(infile, outfile, passwd):
@@ -39,12 +41,15 @@ def read_file(fd):
     if fd.read() != b'':
         fd.seek(0)
         message = fd.read().decode('utf-8')
-        print('[+] {}'.format(message), end='')
-
+        print('[+] {}'.format(message))
+    print('===================================================')
 
 if __name__ == '__main__':
     api = authenticate()
-    for url in get_imgurls('stegospsi'):
+    urls,dates = get_imginfo('stegospsi')
+    print('===================================================')
+    for url,date in zip(urls,dates):
+        print('[Fecha] {0:%d-%m-%Y a las %H:%M:%S}'.format(date))
         with tmp.NamedTemporaryFile() as t, tmp.NamedTemporaryFile() as s:
             urllib.request.urlretrieve(url, t.name)
             steghide_extract(t.name, s.name, secrets.STEG_PASS)
