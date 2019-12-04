@@ -17,4 +17,4 @@ tweepy==3.8.0
 urllib3==1.25.7
 Werkzeug==0.16.0
 gunicorn==19.9.0
-dateutil
+dateutil==2.8.1
