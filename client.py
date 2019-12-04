@@ -15,6 +15,7 @@ def authenticate():
 
 
 def get_imginfo(api, user):
+    # TODO: Time zone
     tweets = api.user_timeline(user_id=user)
     urls = []
     dates = []
