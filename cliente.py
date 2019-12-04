@@ -27,9 +27,9 @@ def steghide_extract(infile, outfile, passwd):
     with subprocess.Popen([
         'steghide',
         'extract',
-        '-sf', t.name,
-        '-xf', s.name,
-        '-p', secrets.STEG_PASS,
+        '-sf', infile.name,
+        '-xf', outfile.name,
+        '-p', passwd,
         '-f'
     ], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
         proc.wait()
@@ -39,7 +39,7 @@ def read_file(fd):
     if fd.read() != b'':
         fd.seek(0)
         message = fd.read().decode('utf-8')
-        print('[+] {}'.format(message), end='')
+        print('[+] {}'.format(message))
 
 
 if __name__ == '__main__':
@@ -47,5 +47,5 @@ if __name__ == '__main__':
     for url in get_imgurls('stegospsi'):
         with tmp.NamedTemporaryFile() as t, tmp.NamedTemporaryFile() as s:
             urllib.request.urlretrieve(url, t.name)
-            steghide_extract(t.name, s.name, secrets.STEG_PASS)
+            steghide_extract(t, s, secrets.STEG_PASS)
             read_file(s)
