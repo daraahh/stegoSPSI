@@ -1,27 +1,51 @@
-#TODO
-#lmao
+#!/usr/bin/env python
 
 import secrets
 import tweepy
-import argparse
-import json
-from PIL import Image
+import urllib.request
+import tempfile as tmp
+import subprocess
+
 
 def authenticate():
-	auth = tweepy.OAuthHandler(secrets.API_KEY,secrets.API_SECRET_KEY)
-	auth.set_access_token(secrets.ACCESS_TOKEN,secrets.ACCESS_TOKEN_SECRET)
-	api = tweepy.API(auth)
-	return api
+    auth = tweepy.OAuthHandler(secrets.API_KEY, secrets.API_SECRET_KEY)
+    auth.set_access_token(secrets.ACCESS_TOKEN, secrets.ACCESS_TOKEN_SECRET)
+    api = tweepy.API(auth)
+    return api
+
 
 def get_imgurls(user):
-	tweets = api.user_timeline(user_id=user)
-	urls = []
-	for status in tweets:
-		for photo in status.entities['media']:
-			urls.append(photo['media_url_https'])
-	return urls
+    tweets = api.user_timeline(user_id=user)
+    urls = []
+    for status in tweets:
+        for photo in status.entities['media']:
+            urls.append(photo['media_url_https'])
+    return urls
+
+
+def steghide_extract(infile, outfile, passwd):
+    with subprocess.Popen([
+        'steghide',
+        'extract',
+        '-sf', t.name,
+        '-xf', s.name,
+        '-p', secrets.STEG_PASS,
+        '-f'
+    ], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
+        proc.wait()
+
+
+def read_file(fd):
+    if fd.read() != b'':
+        fd.seek(0)
+        message = fd.read().decode('utf-8')
+        print('[+] {}'.format(message), end='')
+
 
 if __name__ == '__main__':
-
-	api = authenticate()
-	print(get_imgurls('stegospsi'))
+    api = authenticate()
+    for url in get_imgurls('stegospsi'):
+        with tmp.NamedTemporaryFile() as t, tmp.NamedTemporaryFile() as s:
+            urllib.request.urlretrieve(url, t.name)
+            steghide_extract(t.name, s.name, secrets.STEG_PASS)
+            read_file(s)
