@@ -6,11 +6,11 @@ import argparse
 from PIL import Image
 import subprocess
 import tempfile as tmp
-
+import os
 
 def authenticate():
-    auth = tweepy.OAuthHandler(secrets.API_KEY, secrets.API_SECRET_KEY)
-    auth.set_access_token(secrets.ACCESS_TOKEN, secrets.ACCESS_TOKEN_SECRET)
+    auth = tweepy.OAuthHandler(os.environ['API_KEY'], os.environ['API_SECRET_KEY'])
+    auth.set_access_token(os.environ['ACCESS_TOKEN'], os.environ['ACCESS_TOKEN'])
     api = tweepy.API(auth)
     return api
 
