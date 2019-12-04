@@ -14,7 +14,7 @@ def authenticate():
     return api
 
 
-def get_imginfo(user):
+def get_imginfo(api, user):
     tweets = api.user_timeline(user_id=user)
     urls = []
     dates = []
@@ -22,7 +22,7 @@ def get_imginfo(user):
         dates.append(status.created_at)
         for photo in status.entities['media']:
             urls.append(photo['media_url_https'])
-    return urls,dates
+    return urls, dates
 
 
 def steghide_extract(infile, outfile, passwd):
@@ -38,19 +38,25 @@ def steghide_extract(infile, outfile, passwd):
 
 
 def read_file(fd):
-    if fd.read() != b'':
-        fd.seek(0)
-        message = fd.read().decode('utf-8')
-        print('[+] {}'.format(message))
-    print('===================================================')
+    fd.seek(0)
+    return fd.read().decode('utf-8')
 
-if __name__ == '__main__':
+
+def get_secrets():
     api = authenticate()
-    urls,dates = get_imginfo('stegospsi')
-    print('===================================================')
-    for url,date in zip(urls,dates):
-        print('[Fecha] {0:%d-%m-%Y a las %H:%M:%S}'.format(date))
+    urls, dates = get_imginfo(api, 'stegospsi')
+    text_secrets = []
+    for url, date in zip(urls, dates):
         with tmp.NamedTemporaryFile() as t, tmp.NamedTemporaryFile() as s:
             urllib.request.urlretrieve(url, t.name)
             steghide_extract(t, s, secrets.STEG_PASS)
-            read_file(s)
+            text_secrets.append(read_file(s))
+    return dates, text_secrets
+
+
+if __name__ == '__main__':
+    print('===================================================')
+    for date, message in zip(*get_secrets()):
+        print('[Fecha] {0:%d-%m-%Y a las %H:%M:%S}'.format(date))
+        print('[+] {}'.format(message))
+        print('===================================================')
