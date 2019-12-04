@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import secrets
 import tweepy
 import urllib.request
 import tempfile as tmp
@@ -50,7 +49,7 @@ def get_secrets():
     for url, date in zip(urls, dates):
         with tmp.NamedTemporaryFile() as t, tmp.NamedTemporaryFile() as s:
             urllib.request.urlretrieve(url, t.name)
-            steghide_extract(t, s, secrets.STEG_PASS)
+            steghide_extract(t, s, os.environ['STEG_PASS'])
             text_secrets.append(read_file(s))
     return dates, text_secrets
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import secrets
 import tweepy
 import argparse
 from PIL import Image
@@ -70,11 +69,11 @@ if __name__ == '__main__':
 
     if args.img and args.output and args.text:
         # Crear stego image en local
-        steghide_embed(args.img, args.text, secrets.STEG_PASS,args.output)
+        steghide_embed(args.img, args.text, os.environ['STEG_PASS'],args.output)
     elif args.img:
         # Tweet
         api = authenticate()
-        steghide_embed(args.img, args.text, secrets.STEG_PASS,None)
+        steghide_embed(args.img, args.text, os.environ['STEG_PASS'],None)
         tweet_image(args.img)
 
     elif args.purge:
