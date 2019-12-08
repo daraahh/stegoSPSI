@@ -82,7 +82,7 @@ continuación.
 En este apartado veremos cómo se aplica la esteganografía a las imágenes. Uno de
 los métodos más comúnes es mediante LSB (Least Significant Bit).
 
-## LSB 
+## LSB
 
 La idea es muy sencilla. Por norma general, para representar una imagen, cada píxel se
 representa por una tupla (R,G,B). Cada componente R, G, B puede tomar valores
@@ -149,7 +149,7 @@ poco. Figura 6.
 ![LSB Audio](lsbaudio.png)
 
 El problema de este método es que, a diferencia de en una imagen, con un buen
-equipo de sonido puedes notar el pequeño ruido que deja el modificar los bits. 
+equipo de sonido puedes notar el pequeño ruido que deja el modificar los bits.
 
 ## Modulación de frecuencia
 
@@ -234,7 +234,7 @@ cambiado el 0 por 2, el 75.3 por 1 y el 100 por 0...
 Lo importante aquí es que debemos de tener claro que no existen reglas para la
 esteganografía, y que cuando alguien inventa un método para esconder información
 de manera oculta, intenta que hacerlo de la manera más confusa posible para que
-un atacante no pueda obtenerlo fácilmente. 
+un atacante no pueda obtenerlo fácilmente.
 
 Hay muchas plataformas y eventos donde podemos participar para practicar estás
 tecnicas, que no dejan de ser un rompecabezas.
@@ -249,7 +249,7 @@ Permite a un usuario emisor transmitir texto a través de un perfil público de 
 
 Además para facilitar la exposición de esta prueba de concepto, hemos desplegado una aplicación web en Heroku ([disponible aquí](https://stegospsi.herokuapp.com/)) que sencillamente actuará de cliente y mostrará de forma cronológica los textos ocultos en el perfil de Twitter.
 
-En el esquema de la figura 1 se ilustra la arquitectura del sistema y las diferentes partes que lo componen.
+En el esquema de la Figura 10 se ilustra la arquitectura del sistema y las diferentes partes que lo componen.
 
 El funcionamiento de este sistema se basa principalmente en dos herramientas, la API para desarrolladores proporcionada por Twitter y Steghide.
 
