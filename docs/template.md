@@ -47,22 +47,22 @@ Capilla Sixtina*.
 En ella se encuantra probablemente su obra más conocida, *La creación de Adán*.
 Figura 1.
 
-![*La creación de Adán*](creacion.jpg)
+![*La creación de Adán*](img/creacion.jpg)
 
 Tras su estudio, el médico estadounidense Frank Lynn Meshberger notó que el
 manto que recubre la representación de Dios concuerda con la silueta de un
 cerebro. Figura 2.
 
-![Cerebro en *La creación de Adán*](cerebro.jpg)
+![Cerebro en *La creación de Adán*](img/cerebro.jpg)
 
 No solo en pintura, también se dice que Miguel Ángel ocultó sus avanzados
 conocimientos anatómicos en sus esculturas. En su obra *La Piedad* hay quien
 dice que, visto desde atrás, el manto dibuja la forma de un corazón humano.
 Figura 2 y 3.
 
-![*La Piedad*](piedad.jpg)
+![*La Piedad*](img/piedad.jpg)
 
-![Corazón en *La Piedad*](corazon.jpg)
+![Corazón en *La Piedad*](img/corazon.jpg)
 
 
 Al final, lo bonito de la esteganografía es que solo el autor/emisor puede
@@ -99,7 +99,7 @@ Cada pixel tiene 3 componentes, y si utilizamos el último bit para almacenar
 información oculta, significa que en cada pixel tenemos 3 bits donde podemos ir
 escribiendo nuestro mensaje. Figura 5.
 
-![LSB](lsb.png)
+![LSB](img/lsb.png)
 
 Por tanto, en la imagen de x píxeles, podremos guardar un total de 3\*x bits de
 información. Por ejemplo, en una imagen de *1920x1080*, tendríamos 2073600
@@ -146,7 +146,7 @@ las pistas de audio tendríamos tramas. Deberíamos de ir almacenando, en cada
 byte de las tramas de audio que forman la pista completa, nuestro mensaje poco a
 poco. Figura 6.
 
-![LSB Audio](lsbaudio.png)
+![LSB Audio](img/lsbaudio.png)
 
 El problema de este método es que, a diferencia de en una imagen, con un buen
 equipo de sonido puedes notar el pequeño ruido que deja el modificar los bits.
@@ -165,7 +165,7 @@ encima los ultrasonidos, que son ondas acústicas de frecuencias superiores a lo
 ultrasonidos, si conseguimos ponerlo a una frecuencia lo suficientemente alta,
 podemos hace que sea imperceptible.
 
-![Análisis de frecuencia con esteganografía](frecuencia.png)
+![Análisis de frecuencia con esteganografía](img/frecuencia.png)
 
 Como podemos en la Figura 7, hay un par de picos a la derecha del todo, es
 decir, en la frecuencia más alta. Hemos dicho anteriormente que el oído humano
@@ -173,7 +173,7 @@ no percibe frecuencias más altas de 19kHz, por lo que puede resultarnos raro
 que haya información hasta los 24kHz. Para compararlo, en la Figura 8 tendríamos un
 análisis de frecuencia realizado a una pista de audio normal.
 
-![Análisis de frecuencia sin esteganografía](frecuencianormal.png)
+![Análisis de frecuencia sin esteganografía](img/frecuencianormal.png)
 
 # Herramientas
 ## Steghide
@@ -206,7 +206,7 @@ En cierta plataforma de retos nos daban la imagen que podemos ver en la figura
 9. Puede parecer un mosaico y nada más, lago más bien artístico, pero esconde un
 mensaje.
 
-![Not Art](not_art.png)
+![Not Art](img/not_art.png)
 
 El autor de este método hizo lo siguiente. Podemos diferenciar 2 tipos de
 píxeles. Por un lado tenemos píxeles con colores significativos y píxeles
@@ -257,4 +257,4 @@ Cuando el emisor quiere difundir una noticia nueva, usa el script [stegotwitter.
 
 Por otro lado, el funcionamiento del [frontend](https://github.com/daraahh/stegoSPSI/blob/master/app.py) y los [clientes](https://github.com/daraahh/stegoSPSI/blob/master/client.py) es idéntico, ambos harán una llamada a la API de Twitter para recuperar los tweets del perfil que difunde las imágenes, ejecutarán Steghide y extraerán la información oculta presentándola cronológicamente.
 
-![Esquema PoC](esquema.png)
+![Esquema PoC](img/esquema.png)
