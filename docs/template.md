@@ -22,7 +22,7 @@ Aunque esta disciplina esté relacionada directamente con la criptografía, ya q
 
 La criptografía aplica funciones de cifrado a la información para hacerla ininteligible de cara a un atacante y éste conoce la existencia del mensaje que está siendo transmitido. Por otro lado, la esteganografía oculta la información de modo que su existencia y, sobretodo, su transmisión no sea advertida.
 
-El uso complementario de ambas disciplinas nos proporciona un mecanismo ideal para la protección de la información, dando un nivel de seguridad mejorado. Esto es cifrando el mensaje a ocultar antes de ser esteganografiado. De este modo, un atacante que descubriese la técnica estaganográfica no obtendría la información tansmitida en plano, sino que la encontraría cifrada.
+El uso complementario de ambas disciplinas nos proporciona un mecanismo ideal para la protección de la información, dando un nivel de seguridad mejorado. Esto es cifrando el mensaje a ocultar antes de ser esteganografiado. De este modo, un atacante que descubriese la técnica estaganográfica no obtendría la información transmitida en plano, sino que la encontraría cifrada.
 
 En este documento se hablará de algunas técnicas de esteganografía digital y se presentarán herramientas que nos permiten ocultar mensajes en medios digitales como imágenes y audios. Además se documentará una prueba de concepto con la que se intenta ilustrar el funcionamiento y uso de la esteganografía.
 
@@ -44,7 +44,7 @@ cadáveres para su estudio. Diversas teorías afirman que dejaba constancia de s
 estudios en sus obras más importantes, como por ejemplo en *la bóveda de la
 Capilla Sixtina*.
 
-En ella se encuantra probablemente su obra más conocida, *La creación de Adán*.
+En ella se encuentra probablemente su obra más conocida, *La creación de Adán*.
 Figura 1.
 
 ![*La creación de Adán*](img/creacion.jpg)
@@ -74,13 +74,13 @@ física. Con la llegada de los ordenadores, esconder información resulta más
 sencillo pero también las técnicas para detectarlo son más potentes. Por
 ejemplo, una persona que supiera lo que esta viendo, podría llegar a ver a
 simple vista el ejemplo del cerebro mencionado anteriormente. No obstante, es
-muy dificil cuando trabajamos a nivel de píxeles o frecuencias como veremos a
+muy difícil cuando trabajamos a nivel de píxeles o frecuencias como veremos a
 continuación.
 
 # Imágenes
 
 En este apartado veremos cómo se aplica la esteganografía a las imágenes. Uno de
-los métodos más comúnes es mediante LSB (Least Significant Bit).
+los métodos más comunes es mediante LSB (Least Significant Bit).
 
 ## LSB
 
@@ -95,8 +95,8 @@ otro es mínima. Esto es porque el último bit es el menos significativo. El ojo
 es incapaz de percibir esta diferencia cuando hablamos de colores.
 
 Sabiendo esto, podemos hacer lo siguiente. Una imagen está formada por x píxeles.
-Cada pixel tiene 3 componentes, y si utilizamos el último bit para almacenar
-información oculta, significa que en cada pixel tenemos 3 bits donde podemos ir
+Cada píxel tiene 3 componentes, y si utilizamos el último bit para almacenar
+información oculta, significa que en cada píxel tenemos 3 bits donde podemos ir
 escribiendo nuestro mensaje. Figura 5.
 
 ![LSB](img/lsb.png)
@@ -104,7 +104,7 @@ escribiendo nuestro mensaje. Figura 5.
 Por tanto, en la imagen de x píxeles, podremos guardar un total de 3\*x bits de
 información. Por ejemplo, en una imagen de *1920x1080*, tendríamos 2073600
 píxeles, o lo que es lo mismo, 6220800 bits. Esto significa que si
-almacenaramos un texto plano en ASCII donde un caracter son 8 bits, podríamos
+almacenáramos un texto plano en ASCII donde un caracter son 8 bits, podríamos
 enviar un mensaje de hasta 777600 caracteres.
 
 ## Almacenando la información
@@ -141,7 +141,7 @@ hacerlo en una pista de audio.
 ## LSB
 
 La idea aquí sería exactamente la misma que con las imágenes, almacenar nuestro
-mensaje en los bits menos significativos. En contraposición a los pixeles, en
+mensaje en los bits menos significativos. En contraposición a los píxeles, en
 las pistas de audio tendríamos tramas. Deberíamos de ir almacenando, en cada
 byte de las tramas de audio que forman la pista completa, nuestro mensaje poco a
 poco. Figura 6.
@@ -195,8 +195,8 @@ infinitas para almacenar información de manera que imperceptible. Esto ha dado
 lugar a que mentes creativas de todo el mundo hagan sus propios puzzles para que
 el resto lo resuelva.
 
-En Internet hay competiciones llamadas comunmente como CTF (*Capture the flag* o
-*Caputura la bandera*). Consiste en resolver un puzzle el cual suele estar muy
+En Internet hay competiciones llamadas comúnmente como CTF (*Capture the flag* o
+*Captura la bandera*). Consiste en resolver un puzzle el cual suele estar muy
 relacionado con la seguridad informática. Unas de las categorías es la de
 esteganografía (o "stego" de *steganography* en inglés). Este apartado lo
 usaremos para ver un pequeño ejemplo de como podemos almacenar información
@@ -211,8 +211,8 @@ mensaje.
 El autor de este método hizo lo siguiente. Podemos diferenciar 2 tipos de
 píxeles. Por un lado tenemos píxeles con colores significativos y píxeles
 negros. De hecho, si utilizamos alguna herramienta con la que podamos tomar los
-valores RGB de un píxel, veremos que por ejemplo el primer pixel, el (0,0),
-sería (100, 75.3, 0), el segundo pixel (0, 100, 75.3)... Todos los píxeles
+valores RGB de un píxel, veremos que por ejemplo el primer píxel, el (0,0),
+sería (100, 75.3, 0), el segundo píxel (0, 100, 75.3)... Todos los píxeles
 significativos tienen en RGB el valor 100, 75.3 o 0, o lo que es lo mismo, solo
 hay 3 símbolos posibles (base 3). Como cada píxel tiene 3 componentes, cada
 píxel puede almacenar 27 valores diferentes. Además, si nos fijamos en la
@@ -221,7 +221,7 @@ centro de la imagen en sentido horario. Podemos hacernos una idea de lo que est�
 pasando.
 
 Los píxeles negros están actuando simplemente de delimitador. Debemos de ver los
-valores de cada pixel siguiendo la forma en espiral de los píxeles
+valores de cada píxel siguiendo la forma en espiral de los píxeles
 significativos. Cambiaremos el valor 100 por 2 y el valor 75.3 por 1. De esta
 manera, el primer píxel seria 210 en base3, el segundo 021... ¿Qué podemos
 almacenar si tenemos 27 valores diferentes? El alfabeto. El 000 será la 'a', 001
@@ -237,7 +237,7 @@ de manera oculta, intenta que hacerlo de la manera más confusa posible para que
 un atacante no pueda obtenerlo fácilmente.
 
 Hay muchas plataformas y eventos donde podemos participar para practicar estás
-tecnicas, que no dejan de ser un rompecabezas.
+técnicas, que no dejan de ser un rompecabezas.
 Queda en manos del lector si quiere mejorar sus técnicas y creatividad para
 descubrir cómo se ha almacenado cierta información oculta en una imagen.
 
@@ -253,7 +253,7 @@ En el esquema de la Figura 10 se ilustra la arquitectura del sistema y las difer
 
 El funcionamiento de este sistema se basa principalmente en dos herramientas, la API para desarrolladores proporcionada por Twitter y Steghide.
 
-Cuando el emisor quiere difundir una noticia nueva, usa el script [stegotwitter.py](https://github.com/daraahh/stegoSPSI/blob/master/stegotwitter.py) indicando como argumentos la imagen que se colgará en el perfil de Twitter y el texto a ocultar. Dicho texto será cifrado usando una contraseña por defecto definida por los desarrolladores y posteriormente ocultado utilizando Steghide. Una vez éste ha sido ocultado, se creará un nuevo tweet con la imagen usando la API de twitter y se publicará la imagen.
+Cuando el emisor quiere difundir una noticia nueva, usa el script [stegotwitter.py](https://github.com/daraahh/stegoSPSI/blob/master/stegotwitter.py) indicando como argumentos la imagen que se colgará en el perfil de Twitter y el texto a ocultar. Dicho texto será cifrado usando una contraseña por defecto definida por los desarrolladores y posteriormente ocultado utilizando Steghide. Una vez éste ha sido ocultado, se creará un nuevo tweet con la imagen usando la API de Twitter y se publicará la imagen.
 
 Por otro lado, el funcionamiento del [frontend](https://github.com/daraahh/stegoSPSI/blob/master/app.py) y los [clientes](https://github.com/daraahh/stegoSPSI/blob/master/client.py) es idéntico, ambos harán una llamada a la API de Twitter para recuperar los tweets del perfil que difunde las imágenes, ejecutarán Steghide y extraerán la información oculta presentándola cronológicamente.
 
