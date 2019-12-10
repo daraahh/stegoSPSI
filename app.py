@@ -1,8 +1,16 @@
 #!/usr/bin/env python
 
 from flask import Flask, render_template
+from flask_basicauth import BasicAuth
 import client
+import os
+
 app = Flask(__name__)
+
+app.config['BASIC_AUTH_USERNAME'] = os.environ['DEMO_USER']
+app.config['BASIC_AUTH_PASSWORD'] = os.environ['DEMO_PASS']
+
+basic_auth = BasicAuth(app)
 
 
 def prepare_data(secrets):
@@ -16,6 +24,7 @@ def prepare_data(secrets):
 
 
 @app.route('/')
+@basic_auth.required
 def default():
     secrets = prepare_data(client.get_secrets())
     return render_template('index.html', secrets=secrets)
